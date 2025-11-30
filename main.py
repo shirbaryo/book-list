@@ -3,8 +3,15 @@ from fastapi import FastAPI, HTTPException
 app = FastAPI()
 
 # מסד נתונים בזיכרון
-books = []
-counter = 1
+books = [
+    {"id": 1, "title": "Harry Potter", "author": "J.K. Rowling", "year": 1997},
+    {"id": 2, "title": "The Hobbit", "author": "Tolkien", "year": 1937},
+    {"id": 3, "title": "The Little Prince", "author": "Antoine de Saint-Exupéry", "year": 1943}
+]
+
+
+counter = 4
+
 
 
 @app.get("/books")
@@ -26,11 +33,13 @@ def add_book(book: dict):
     new_book = {
         "id": counter,
         "title": book.get("title"),
-        "author": book.get("author")
+        "author": book.get("author"),
+        "year": book.get("year")   # <-- added
     }
     books.append(new_book)
     counter += 1
     return new_book
+
 
 
 @app.delete("/books/{book_id}")
